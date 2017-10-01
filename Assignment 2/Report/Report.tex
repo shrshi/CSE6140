@@ -18,7 +18,13 @@ This criteria does not produce the optimal schedule of emails. Consider two emai
 \subsection{Greedy by largest weight $w_i$ first}
 This criteria does not produce the optimal schedule of emails. Consider two emails -- email 1 with $t_1 = 3$ and $w_1 = 2$ and email 2 with $t_2 = 1$ and $w_2 = 1$. By the largest weight first criteria, we would get $X = t_1w_1 + (t_1 + t_2)w_2 = 10$. However, if we swap the order of processing the emails, we would get $X = t_2w_2 + (t_2 + t_1)w_1 = 9$. Thus, this criteria is incorrect.
 \subsection{Greedy by largest weight-per-unit-time $\frac{w_i}{t_i}$ first}
-This greedy algorithm will produce the optimal solution. Note that a problem instance in this case is picking the next email $j$ that would minimise $X$. Consider a problem instance $I$ and let email $j$ be the one with the largest ratio of weight to processing time. We need to show that there exists an optimal scheduling order solution $S$ to $I$ that has value $X$ and includes the greedy choice $j$ before any other email. Let $S^\prime$ be any optimal scheduling order to $I$ whose value is $X^\prime$. Let email $i$ be the one with the shortest completion time in $S^\prime$. Thus, $S^\prime$ includes $j$ at later completion time. Now, $\frac{w_i}{t_i} < \frac{w_j}{t_j}$ and $C_j > C_i$. Construct a solution $S$ by swapping email $i$ and $j$ in the scheduling order. Now
+This greedy algorithm will produce the optimal solution. Note that a problem instance in this case is picking the emails in an order that would minimise $X$. Consider a problem instance $I$ and let email $j$ be the one with the largest ratio of weight to processing time. We need to show that there exists an optimal scheduling order solution $S$ to $I$ that has value $X$ and includes the greedy choice $j$ before any other email. Let $S^\prime$ be any optimal scheduling order to $I$ whose value is $X^\prime$. Let email $i$ be the one with the shortest completion time in $S^\prime$. Thus, $S^\prime$ includes $j$ at later completion time. Now, $\frac{w_i}{t_i} \leq \frac{w_j}{t_j}$ and $C_j > C_i$. Construct a solution $S$ by swapping email $i$ and $j$ in the scheduling order. Now, 
+\begin{align*}
+X &= X^\prime - \frac{w_iC_i}{t_i} - \frac{w_jC_j}{t_j} + \frac{w_jC_i}{t_j} + \frac{w_iC_j}{t_i}\\
+\quad &= X^\prime - (C_j - C_i)\Big(\frac{w_j}{t_j} - \frac{w_i}{t_i}\Big)\\
+&\leq X^\prime
+\end{align*}
+Thus, since greedy solution $S$ performs no worse than $S^\prime$, it is just as good as any optimal solution and is hence optimal in itself. 
 
 \section{Divide and Conquer}
 \subsection{Maximum value contiguous subarray}
@@ -70,7 +76,66 @@ Thus, according to master theorem,
 \end{enumerate}
 
 \section{Dynamic Programming}
-Given string $y = y_1y_2\ldots y_n$, we need to compute a segmentation that maximises total plausibility of $y$. There are a total of $2^{n-1}$ ways to segment $y$. Let $MP(i) = \text{maximum total plausibility of string }y_1y_2\ldots y_i$. Thus, we can write the recursion
-$$MP(i) = \underset{1 \leq j < i}{max} \big\{ MP(j) + plausibility(y_{j+1}y_{j+2}\ldots y_i) \big\}$$ 
+Given string $y = y_1y_2\ldots y_n$, we need to compute a segmentation that maximises total plausibility of $y$. There are a total of $2^{n-1}$ ways to segment $y$. Let $MP(1, i) = \text{maximum total plausibility of string }y_1y_2\ldots y_i$. Thus, we can write the recursion
+$$MP(1, i) = \begin{cases} 
+      \underset{1 \leq j \leq i}{max} \big\{ MP(1, j) + plausibility(y_{j+1}y_{j+2}\ldots y_i) \big\} & i\neq 0 \\
+      0 & i=0
+   \end{cases}
+$$
+\subsection{Optimal Substructure Property}
+Note that the problem instance here is to find the maximum total plausibility, $MP(1, n)$ of the string $y_1y_2y_3\ldots y_n$. Let $P(j,k) = plausibility(y_{j}\ldots y_k)$. Thus, if an optimal solution segments the string into $k$ substrings, we have
+\begin{align*}
+n &= i_1 + i_2 + \ldots + i_k\\
+MP(1, n) &= P(1, i_1) + P(i_1 + 1, i_1 + i_2) + \ldots + P(i_1 + i_2 + \ldots + i_{k-1} + 1, i_1 + i_2 + \ldots + i_{k})
+\end{align*}
 
+Thus, for the first segmenting cut to the string, we get
+\begin{multline} \label{dp}
+MP(1, n) = max(MP(1, n-1) + MP(n, n), MP(1, n-2) + MP(n-1, n),\\ 
+\ldots ,\ MP(1, 1) + MP(2, n),\ MP(1, 0) + MP(1, n)
+\end{multline}
+Here, the last argument corresponds to not segmenting the string at all. The previous $i-1$ arguments correspond maximum plausibility obtained by segmenting the string into two parts of length $j$ and $i-j$ for $j=1,\ldots,i-1$. Now, we need to further optimally segment the two substrings further. Since the optimal solutions is written entirely in terms of optimal sub-solutions, the problem shows optimal substructure property. Note that for any argument $MP(1, j) + MP(j+1, n)$  in equation \ref{dp}, we can write $MP(j+1, n) = P(j+1, n)$. If it were not so, we could segment $y_{j+1}y_{j+2}\ldots y_{n}$ further at some point $k$ such that $MP(1, n)$ will have a higher total plausibility than before segmenting at $k$. However, this corresponds to the subproblem of $MP(1, k) + MP(k+1, n)$. Thus, we can write $MP(j+1, n) = P(j+1, n)$. Also, we can drop the first index of $MP(1, n)$ since it does not affect equation \ref{dp}.
+
+\subsection{Recursive Expression}
+Let $MP(n) = \text{maximum total plausibility of string }y_1y_2\ldots y_n$. Let $P(j,k) = plausibility(y_{j}\ldots y_k)$. Thus, we can write the recursion
+$$MP(n) = \begin{cases} 
+      \underset{1 \leq j \leq n}{max} \big\{ MP(j) + P(j+1, n) \big\} & n\neq 0 \\
+      0 & n=0
+   \end{cases}
+$$
+
+\subsection{Recursive Algorithm}
+\subsubsection*{Memoized-Recursive-Segmentation(n)}
+\begin{enumerate}
+\item let MP[0..n] be a new array with all elements assigned to $-\infty$
+\item return \textbf{Memoized-Recursive-Segmentation-Helper(n, MP)}
+\end{enumerate}
+\subsubsection*{Memoized-Recursive-Segmentation-Helper(n, MP)}
+\begin{enumerate}
+\item if $MP[n]\geq 0$ return $MP[n]$
+\item if $n=0$, then $mp = 0$, else set $mp = -\infty$
+\item if $n\neq 0$, then use $j$ to loop through the list of possible indices i.e. from $n-1$ to 0 and set $mp = max(mp, \textbf{Memoized-Recursive-Segmentation-Helper(j, MP)} + P(j+1, n)$ at each iteration of the loop
+\item set $MP[n] = mp$
+\item return mp
+\end{enumerate}
+
+The time complexity of this algorithm is $\mathcal{O}(n^2)$ since for each problem $MP(n)$, we need check all the subproblems from $MP(1)$ to $MP(n-1)$ and each subproblem takes $\mathcal{O}(1)$ time. The space complexity of the algorithm is $\mathcal{O}(n)$ since we need to initialize the MP array.
+
+\subsection{Bottom-Up Approach}
+Since for each problem $MP(n)$, we need to solve all subproblems from $MP(1)$ to $MP(n-1)$, the bottom-up algorithm computes these subproblems before computing $MP(n)$.
+\subsubsection*{Bottom-Up-Segmentation(n)}
+\begin{enumerate}
+\item let MP[0..n] be a new array with all elements assigned to $-\infty$
+\item Let $MP[0]=0$
+\item for i = 1 to n
+\begin{enumerate}
+\item set $mp = -\infty$
+\item for j = i-1 to 0
+\begin{enumerate}
+\item $mp = max(mp, MP[j] + P(j+1, i)$
+\end{enumerate}
+\item MP[i] = mp
+\end{enumerate}
+\item return MP
+\end{enumerate}
 \end{document}

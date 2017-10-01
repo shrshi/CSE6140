@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.28)  22 SEP 2017 18:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.28)  1 OCT 2017 15:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -521,32 +521,43 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (4.22289pt too wide) in paragraph at lines 34--35
+Overfull \hbox (4.22289pt too wide) in paragraph at lines 40--41
 []\OT1/cmr/m/n/10 (left-low, left-high, left-sum) = Maximum-value-subarray(T, l
 ow, mid) 
  []
 
 
-Overfull \hbox (3.25067pt too wide) in paragraph at lines 35--36
+Overfull \hbox (3.25067pt too wide) in paragraph at lines 41--42
 []\OT1/cmr/m/n/10 (right-low, right-high, right-sum) = Maximum-value-subarray(T
 , mid,
  []
 
 
-Overfull \hbox (27.33392pt too wide) in paragraph at lines 36--37
+Overfull \hbox (27.33392pt too wide) in paragraph at lines 42--43
 []\OT1/cmr/m/n/10 (across-low, across-high, across-sum) = Maximum-value-across-
 subarray(T,
  []
 
-[2] [3] (./Report.aux) ) 
+[2]
+Overfull \hbox (57.33458pt too wide) in paragraph at lines 90--90
+[] 
+ []
+
+[3]
+Overfull \hbox (60.52916pt too wide) in paragraph at lines 117--118
+\OT1/cmr/m/n/10 to 0 and set $\OML/cmm/m/it/10 mp \OT1/cmr/m/n/10 = \OML/cmm/m/
+it/10 max\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 mp; [] \OT1/cmr/m/n/10 +
+ []
+
+[4] [5] (./Report.aux) ) 
 Here is how much of TeX's memory you used:
- 2680 strings out of 494910
- 33624 string characters out of 6179836
- 92266 words of memory out of 5000000
- 5931 multiletter control sequences out of 15000+600000
- 11503 words of font info for 45 fonts, out of 8000000 for 9000
+ 2685 strings out of 494910
+ 33666 string characters out of 6179836
+ 95274 words of memory out of 5000000
+ 5934 multiletter control sequences out of 15000+600000
+ 12122 words of font info for 47 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 37i,8n,24p,809b,199s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,12n,24p,951b,217s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex1
@@ -562,10 +573,10 @@ c/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on Report.pdf (3 pages, 168670 bytes).
+Output written on Report.pdf (5 pages, 179298 bytes).
 PDF statistics:
- 78 PDF objects out of 1000 (max. 8388607)
- 56 compressed objects within 1 object stream
+ 84 PDF objects out of 1000 (max. 8388607)
+ 60 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
