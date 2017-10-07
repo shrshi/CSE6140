@@ -6,5 +6,5 @@ struct retval
 	double val;
 };
 
-struct retval dc(double *arr, int low, int high);
-struct retval dc_helper(double *arr, int low, int high, int mid);
+void dc(double *arr, int low, int high, double *sum, int *li, int *ri);
+void dc_helper(double *arr, int low, int high, int mid, double *sum, int *li, int *ri);

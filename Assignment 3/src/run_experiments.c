@@ -17,8 +17,8 @@ int main(int argc, char **argv)
 	char filename[50], t[20];
 	char *line, *token;
 	int params[2], i, j;
-	double *arr;
-	struct retval r;
+	double *arr, dc_sum;
+	int dc_li, dc_ri;
 	
 	dp = opendir("../data");	
 	while((dptr=readdir(dp))!=NULL)
@@ -50,10 +50,9 @@ int main(int argc, char **argv)
 				token=strtok(NULL, ",");
 				i++;
 			}
-			r = dc(arr, 0, params[0]-1);
-			double a[4] = {1., 2., -3., 4.};
-			r = dc(a,0,3);
-			printf("%d, %d, %d\n", r.low, r.high, r.val);
+			dc_sum=0.0, dc_li = -1, dc_ri = -1;
+			dc(arr, 0, params[0]-1, &dc_sum, &dc_li, &dc_ri);
+			printf("%d, %d, %d\n", dc_sum, dc_li, dc_ri);
 			//dp(arr);
 			free(line);
 			free(arr);

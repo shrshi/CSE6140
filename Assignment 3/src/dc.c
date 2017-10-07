@@ -4,32 +4,42 @@
 #include"dc.h"
 
 
-struct retval dc(double *arr, int low, int high)
+void dc(double *arr, int low, int high, double *sum, int *li, int *ri)
 {
-	struct retval r, rl, ra, rr;
-	int mid;
+	int mid, leftlow, lefthigh, rightlow, righthigh,acrosslow, acrosshigh;
+	double acrossum, leftsum, rightsum;
 	if(low==high)
 	{
-		r.low=low; r.high=high; r.val=arr[low];
-		return r;
+		*sum = arr[low]; *li = low; *ri = high;
 	}
 	else
 	{
 		mid = (low+high)/2;
-		rl = dc(arr, low, mid);
-		rr = dc(arr, mid+1, high);
-		ra = dc_helper(arr, low, high, mid);
-		printf("%d, %d", low, high);
-		if(rl.val>rr.val && rl.val>ra.val)
-			return rl;
-		else if(rr.val>rl.val && rr.val>ra.val)
-			return rr;
+		dc(arr, low, mid, &leftsum, &leftlow, &lefthigh);
+		dc(arr, mid+1, high, &rightsum, &rightlow, &righthigh);
+		dc_helper(arr, low, high, mid, &acrossum, &acrosslow, &acrosshigh);
+		if(leftsum>rightsum && leftsum>acrossum)
+		{
+			*sum = leftsum;
+			*li = leftlow;
+			*ri = lefthigh;
+		}
+		else if(rightsum>leftsum && rightsum>acrossum)
+		{
+			*sum = rightsum;
+			*li = rightlow;
+			*ri = righthigh;
+		}
 		else
-			return ra;
+		{
+			*sum = acrossum;
+			*li = acrosslow;
+			*ri = acrosshigh;
+		}
 	}
 }
 
-struct retval dc_helper(double *arr, int low, int high, int mid)
+void dc_helper(double *arr, int low, int high, int mid, double *acrossum, int *acrossleft, int *acrossright)
 {
 	double leftsum = -INFINITY, sum = 0.0, rightsum = -INFINITY;
 	int i, maxleft, maxright;
@@ -52,11 +62,8 @@ struct retval dc_helper(double *arr, int low, int high, int mid)
 			maxright=i;
 		}
 	}
-	struct retval r;
-	r.low=maxleft; r.high=maxright; r.val=leftsum+rightsum;
-	return r;
+	*acrossum = leftsum+rightsum;
+	*acrossleft = maxleft;
+	*acrossright = maxright;
 }
-
-
-
 
