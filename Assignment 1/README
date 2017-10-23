@@ -1,0 +1,6 @@
+Project to compute minimum spanning tree of given graph statically and dynamically
+__________________________________________________________________________________
+
+Batch run : ./runTests.sh
+Run for single file : python src/run_experiments.py <complete path to graph file> <complete path to extra file> <complete path to result file>
+Generating graph : python results/plot.py
