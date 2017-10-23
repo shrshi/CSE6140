@@ -3,7 +3,8 @@
 #include<math.h>
 #include"dc.h"
 
-
+/* Divide and conquer algorithm
+ */
 void dc(double *arr, int low, int high, double *sum, int *li, int *ri)
 {
 	//printf("in");

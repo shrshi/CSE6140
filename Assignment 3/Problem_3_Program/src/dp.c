@@ -3,7 +3,8 @@
 #include<math.h>
 #include"dp.h"
 
-
+/* Dynamic programming algorithm
+ */
 void dp(double *arr, int n, double *max_sum, int *max_li, int *max_ri)
 {
 	double max_here=0.;
